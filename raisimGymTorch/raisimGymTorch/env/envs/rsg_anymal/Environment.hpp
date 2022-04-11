@@ -99,6 +99,28 @@ class ENVIRONMENT : public RaisimGymEnv {
 
     rewards_.record("torque", anymal_->getGeneralizedForce().squaredNorm());
     rewards_.record("forwardVel", std::min(4.0, bodyLinearVel_[0]));
+    /// penalize omega_x and omega_y
+    rewards_.record("bodyMotion", 1.25 * std::pow(bodyLinearVel_[2], 2) + 0.4 * std::abs(bodyAngularVel_[0]) + 0.4 * std::abs(bodyAngularVel_[1]));
+    
+    /// penalize joint velocity (sum of square)
+    float sum_joint_vel_sq = 0.0;
+    for(int i=0; i<12; i++){   ///  we have 12 joints
+        sum_joint_vel_sq += std::pow(gv_.tail(12)[i], 2);
+    }
+    rewards_.record("jointVel", 0.01 * sum_joint_vel_sq);
+
+    /// print joint velocity
+    /*
+    std::cout << "joint velocity printout:" << std::endl;
+    float sum_joint_vel = 0;
+    for(int i=0; i<12; i++){
+        std::cout << gv_.tail(12)[i] << std::endl;
+        sum_joint_vel += gv_.tail(12)[i];
+    }
+    std::cout << "sum of joint vel:" << std::endl;
+    std::cout << sum_joint_vel << std::endl;
+    std::cout << "---------------" << std::endl;
+    */
 
     return rewards_.sum();
   }
