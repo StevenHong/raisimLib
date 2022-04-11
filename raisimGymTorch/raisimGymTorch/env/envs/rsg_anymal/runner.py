@@ -42,6 +42,8 @@ env = VecEnv(RaisimGymEnv(home_path + "/rsc", dump(cfg['environment'], Dumper=Ro
 # shortcuts
 ob_dim = env.num_obs
 act_dim = env.num_acts
+print('number of states (ob_dim):', ob_dim)
+print('number of actions (act_dim):', act_dim)
 num_threads = cfg['environment']['num_threads']
 
 # Training
@@ -75,12 +77,15 @@ ppo = PPO.PPO(actor=actor,
               device=device,
               log_dir=saver.data_dir,
               shuffle_batch=False,
+              ### value_loss_coef=0.5,
+              ### entropy_coef=0.01,
               )
 
 if mode == 'retrain':
     load_param(weight_path, env, actor, critic, ppo.optimizer, saver.data_dir)
 
-for update in range(1000000):
+# for update in range(1000000):
+for update in range(20001):
     start = time.time()
     env.reset()
     reward_ll_sum = 0
