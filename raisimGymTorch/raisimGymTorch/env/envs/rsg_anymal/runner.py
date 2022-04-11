@@ -13,6 +13,11 @@ import torch
 import datetime
 import argparse
 
+import pickle
+
+# NOTE: data is saved in raisimLib/raisimGymTorch/data/anymal_locamotion/...
+# To test or retrain from a trained policy, run (for example):
+# python raisimGymTorch/env/envs/rsg_anymal/tester.py --weight data/anymal_locomotion/2022-02-03-22-40-56/full_400.pt (for example)
 
 # task specification
 task_name = "anymal_locomotion"
@@ -27,6 +32,7 @@ weight_path = args.weight
 
 # check if gpu is available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cpu')
 
 # directories
 task_path = os.path.dirname(os.path.realpath(__file__))
@@ -41,6 +47,9 @@ env = VecEnv(rsg_anymal.RaisimGymEnv(home_path + "/rsc", dump(cfg['environment']
 # shortcuts
 ob_dim = env.num_obs
 act_dim = env.num_acts
+
+print('number of states (ob_dim):', ob_dim)
+print('number of actions (act_dim):', act_dim)
 
 # Training
 n_steps = math.floor(cfg['environment']['max_time'] / cfg['environment']['control_dt'])
@@ -74,7 +83,16 @@ ppo = PPO.PPO(actor=actor,
 if mode == 'retrain':
     load_param(weight_path, env, actor, critic, ppo.optimizer, saver.data_dir)
 
-for update in range(1000000):
+
+# list to save outputs
+average_ll_performance_all = []
+average_dones_all = []
+times_all = []
+fps_all = []
+real_time_factor_all = []
+std_all = []
+
+for update in range(1000):
     start = time.time()
     env.reset()
     reward_ll_sum = 0
@@ -146,3 +164,30 @@ for update in range(1000000):
     print('std: ')
     print(np.exp(actor.distribution.std.cpu().detach().numpy()))
     print('----------------------------------------------------\n')
+
+    # save log
+    average_ll_performance_all.append(average_ll_performance)
+    average_dones_all.append(average_dones)
+    times_all.append(end - start)
+    fps_all.append(total_steps / (end - start))
+    real_time_factor_all.append(total_steps / (end - start) * cfg['environment']['control_dt'])
+    std_all.append(np.exp(actor.distribution.std.cpu().detach().numpy()))
+# END FOR
+
+log_dict = {}
+log_dict['average ll performance'] = average_ll_performance_all
+log_dict['average dones'] = average_dones_all
+log_dict['time elapsed'] = times_all
+log_dict['fps'] = fps_all
+log_dict['read time factor'] = real_time_factor_all
+log_dict['std'] = std_all
+
+## print(log_dict)
+
+# save dict
+with open('logfile.pkl', 'wb') as file:
+    pickle.dump(log_dict, file)
+
+# load dict
+## with open('logfile.pkl', 'rb') as file:
+##     a = pickle.load(file)

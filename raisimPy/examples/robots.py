@@ -72,6 +72,7 @@ jaco_foot_lh_linear = anymal.getDenseFrameJacobian("LF_ADAPTER_TO_FOOT")
 jaco_foot_lh_angular = anymal.getDenseFrameRotationalJacobian("LF_ADAPTER_TO_FOOT")
 
 for i in range(500000):
+    print(i)
     time.sleep(0.001)
     world.integrate()
 
