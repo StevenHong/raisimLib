@@ -35,6 +35,14 @@ home_path = task_path + "/../../../../.."
 
 # config
 cfg = YAML().load(open(task_path + "/cfg.yaml", 'r'))
+print('cfg echo:', cfg)
+# echo reward settings
+print('\n--- Reward coefficients ---')
+print('forwardVel:', cfg['environment']['reward']['forwardVel']['coeff'])
+print('torque:', cfg['environment']['reward']['torque']['coeff'])
+print('bodyMotion:', cfg['environment']['reward']['bodyMotion']['coeff'])
+print('jointVel:', cfg['environment']['reward']['jointVel']['coeff'])
+print('---------------------------\n')
 
 # create environment from the configuration file
 env = VecEnv(RaisimGymEnv(home_path + "/rsc", dump(cfg['environment'], Dumper=RoundTripDumper)))
@@ -77,8 +85,8 @@ ppo = PPO.PPO(actor=actor,
               device=device,
               log_dir=saver.data_dir,
               shuffle_batch=False,
-              ### value_loss_coef=0.5,
-              ### entropy_coef=0.01,
+              value_loss_coef=0.5,
+              entropy_coef=0.01,
               )
 
 if mode == 'retrain':
