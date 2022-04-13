@@ -21,7 +21,7 @@ environment:
       coeff: -0.3
     # penalize joint velocity to avoid vibration
     jointVel:
-      coeff: -0.001
+      coeff: -0.0001
     
 
 architecture:
