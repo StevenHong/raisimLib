@@ -5,23 +5,20 @@ environment:
   render: True
 # just testing commenting
   num_envs: 100
-  eval_every_n: 1000
+  eval_every_n: 200
   num_threads: 30
   simulation_dt: 0.0025
   control_dt: 0.01
   max_time: 4.0
   reward:
-    # linear forward speed
     forwardVel:
-      coeff: 0.3
+      coeff: 0.05
+    rotationVel:
+      coeff: 0.005
     torque:
-      coeff: -4e-5
-    # penalized body motion (angular velocity and v_z) for smoother motion
-    bodyMotion:
-      coeff: -0.3
-    # penalize joint velocity to avoid vibration
-    jointVel:
-      coeff: -0.0001
+      coeff: -2e-5
+    sideVel:
+      coeff: -0.005
     
 
 architecture:

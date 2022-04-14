@@ -40,8 +40,8 @@ print('cfg echo:', cfg)
 print('\n--- Reward coefficients ---')
 print('forwardVel:', cfg['environment']['reward']['forwardVel']['coeff'])
 print('torque:', cfg['environment']['reward']['torque']['coeff'])
-print('bodyMotion:', cfg['environment']['reward']['bodyMotion']['coeff'])
-print('jointVel:', cfg['environment']['reward']['jointVel']['coeff'])
+print('rotationVel:', cfg['environment']['reward']['rotationVel']['coeff'])
+print('sideVel:', cfg['environment']['reward']['sideVel']['coeff'])
 print('---------------------------\n')
 
 # create environment from the configuration file

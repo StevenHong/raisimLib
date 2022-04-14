@@ -25,7 +25,8 @@ class ENVIRONMENT : public RaisimGymEnv {
     anymal_ = world_->addArticulatedSystem(resourceDir_+"/anymal/urdf/anymal.urdf");
     anymal_->setName("anymal");
     anymal_->setControlMode(raisim::ControlMode::PD_PLUS_FEEDFORWARD_TORQUE);
-    world_->addGround();
+    world_->addGround(-0.1);
+    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_2.txt", 0, 0);
 
     /// get robot data
     gcDim_ = anymal_->getGeneralizedCoordinateDim();
@@ -38,7 +39,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     pTarget_.setZero(gcDim_); vTarget_.setZero(gvDim_); pTarget12_.setZero(nJoints_);
 
     /// this is nominal configuration of anymal
-    gc_init_ << 0, 0, 0.50, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;
+    gc_init_ << 0, 0, 0.60, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;
 
     /// set pd gains
     Eigen::VectorXd jointPgain(gvDim_), jointDgain(gvDim_);
@@ -97,30 +98,26 @@ class ENVIRONMENT : public RaisimGymEnv {
 
     updateObservation();
 
-    rewards_.record("torque", anymal_->getGeneralizedForce().squaredNorm());
-    rewards_.record("forwardVel", std::min(4.0, bodyLinearVel_[0]));
-    /// penalize omega_x and omega_y
-    rewards_.record("bodyMotion", 1.25 * std::pow(bodyLinearVel_[2], 2) + 0.4 * std::abs(bodyAngularVel_[0]) + 0.4 * std::abs(bodyAngularVel_[1]));
+    double linearVel;
+    if (bodyLinearVel_[0] < 0.6) {
+    	linearVel = exp(-2.0*(bodyLinearVel_[0]-0.6)*(bodyLinearVel_[0]-0.6));
+    } else {
+    	linearVel = 1;
+    }
     
-    /// penalize joint velocity (sum of square)
-    float sum_joint_vel_sq = 0.0;
-    for(int i=0; i<12; i++){   ///  we have 12 joints
-        sum_joint_vel_sq += std::pow(gv_.tail(12)[i], 2);
+    double sideVel;
+    if (bodyLinearVel_[1] < 0.6) {
+    	sideVel = exp(-2.0*(bodyLinearVel_[1]-0.6)*(bodyLinearVel_[1]-0.6));
+    } else {
+    	sideVel = 1;
     }
-    rewards_.record("jointVel", 0.01 * sum_joint_vel_sq);
+    
+    double angularVel = exp(-1.5*bodyAngularVel_[2]*bodyAngularVel_[2])+exp(-1.5*bodyAngularVel_[1]*bodyAngularVel_[1])+exp(-1.5*bodyAngularVel_[0]*bodyAngularVel_[0]);
 
-    /// print joint velocity
-    /*
-    std::cout << "joint velocity printout:" << std::endl;
-    float sum_joint_vel = 0;
-    for(int i=0; i<12; i++){
-        std::cout << gv_.tail(12)[i] << std::endl;
-        sum_joint_vel += gv_.tail(12)[i];
-    }
-    std::cout << "sum of joint vel:" << std::endl;
-    std::cout << sum_joint_vel << std::endl;
-    std::cout << "---------------" << std::endl;
-    */
+    rewards_.record("torque", anymal_->getGeneralizedForce().squaredNorm());
+    rewards_.record("forwardVel", linearVel);
+    rewards_.record("sideVel", sideVel);
+    rewards_.record("rotationVel", angularVel);
 
     return rewards_.sum();
   }
