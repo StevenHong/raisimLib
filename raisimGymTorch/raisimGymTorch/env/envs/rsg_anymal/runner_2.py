@@ -40,8 +40,8 @@ print('cfg echo:', cfg)
 print('\n--- Reward coefficients ---')
 print('forwardVel:', cfg['environment']['reward']['forwardVel']['coeff'])
 print('torque:', cfg['environment']['reward']['torque']['coeff'])
-print('bodyMotion:', cfg['environment']['reward']['bodyMotion']['coeff'])
-print('jointVel:', cfg['environment']['reward']['jointVel']['coeff'])
+print('rotationVel:', cfg['environment']['reward']['rotationVel']['coeff'])
+print('sideVel:', cfg['environment']['reward']['sideVel']['coeff'])
 print('---------------------------\n')
 
 # create environment from the configuration file
@@ -71,7 +71,7 @@ critic = ppo_module.Critic(ppo_module.MLP(cfg['architecture']['value_net'], nn.L
                            device)
 
 saver = ConfigurationSaver(log_dir=home_path + "/raisimGymTorch/data/"+task_name,
-                           save_items=[task_path + "/cfg.yaml", task_path + "/Environment.hpp"])
+                           save_items=[task_path + "/cfg_2.yaml", task_path + "/Environment_2.hpp"])
 tensorboard_launcher(saver.data_dir+"/..")  # press refresh (F5) after the first ppo update
 
 ppo = PPO.PPO(actor=actor,
