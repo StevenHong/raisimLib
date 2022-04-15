@@ -79,3 +79,7 @@ python map_generator.py
 python plot_train_history.py
 ```
 
+3. Plot the average reward history
+```
+python plot_reward_history.py
+```
