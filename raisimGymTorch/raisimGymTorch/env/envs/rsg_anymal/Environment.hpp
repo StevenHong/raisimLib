@@ -26,7 +26,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     anymal_->setName("anymal");
     anymal_->setControlMode(raisim::ControlMode::PD_PLUS_FEEDFORWARD_TORQUE);
     world_->addGround(-0.1);
-    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_2.txt", 0, 0);
+    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_3.txt", 0, 0);
 
     /// get robot data
     gcDim_ = anymal_->getGeneralizedCoordinateDim();

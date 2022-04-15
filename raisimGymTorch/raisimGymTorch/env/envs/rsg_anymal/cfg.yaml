@@ -13,7 +13,7 @@ environment:
   reward:
     # linear forward speed
     forwardVel:
-      coeff: 0.2
+      coeff: 0.3
     torque:
       coeff: -4e-5
     # penalized body motion (angular velocity and v_z) for smoother motion
