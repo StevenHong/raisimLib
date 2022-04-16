@@ -13,7 +13,7 @@ environment:
   reward:
     # linear forward speed
     forwardVel:
-      coeff: 0.3
+      coeff: 0.4
     torque:
       coeff: -4e-5
     # penalized body motion (angular velocity and v_z) for smoother motion
@@ -21,7 +21,7 @@ environment:
       coeff: -0.3
     # penalize joint velocity to avoid vibration
     jointVel:
-      coeff: -0.0001
+      coeff: -0.003
     
 
 architecture:

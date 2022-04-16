@@ -3,7 +3,7 @@ import numpy as np
 x_points = 15
 y_points = 15
 
-range = [0.0, 0.5]
+range = [0.0, 0.75]
 
 vals = np.random.random(x_points*y_points)*(range[1]-range[0])+range[0]
 

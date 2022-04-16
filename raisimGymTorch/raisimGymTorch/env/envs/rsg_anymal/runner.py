@@ -86,7 +86,7 @@ ppo = PPO.PPO(actor=actor,
               log_dir=saver.data_dir,
               shuffle_batch=False,
               value_loss_coef=0.5,
-              entropy_coef=0.01,
+              entropy_coef=0.01
               )
 
 if mode == 'retrain':

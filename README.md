@@ -68,6 +68,21 @@ python runner.py | tee output.log
 python3 tester.py --weight /home/roahm/RL_ws/src/raisimlib/raisimGymTorch/data/anymal_locomotion/2022-03-07-13-17-11/full_3400.pt
 ```
 
+## Comparison note
+1. Change the file path in Environment.hpp to change the map, then compile the code. Use the tester.py to check the performance
+```
+sudo python3 setup.py develop
+```
+
+The list of the map included in the file is shown below:
+	a. heightMap_1.txt: flat terrain (all 0.4)
+	b. heightMap_2.txt: training terrain (0 - 0.5)
+	c. heightMap_3.txt: testing terrain (0 - 0.5)
+	d. heightMap_4.txt: challenging terrain (0 - 0.75)
+	e. heightMap_5.txt: impossible terrain (0 - 1.0) 
+
+2. Instead of the preset random map, can also use terrain generator to create a map in Environment.hpp. The robot needs to contact the ground to start the training.
+
 ## Useful Scripts
 1. Generate the random map using txt file
 ```
