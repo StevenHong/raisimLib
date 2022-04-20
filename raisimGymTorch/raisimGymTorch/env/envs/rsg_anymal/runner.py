@@ -86,14 +86,16 @@ ppo = PPO.PPO(actor=actor,
               log_dir=saver.data_dir,
               shuffle_batch=False,
               value_loss_coef=0.5,
-              entropy_coef=0.01
+              entropy_coef=0.01,
+              learning_rate_schedule='adaptive'
+              #learning_rate_schedule='adaptive'
               )
 
 if mode == 'retrain':
     load_param(weight_path, env, actor, critic, ppo.optimizer, saver.data_dir)
 
 # for update in range(1000000):
-for update in range(20001):
+for update in range(20002):
     start = time.time()
     env.reset()
     reward_ll_sum = 0
