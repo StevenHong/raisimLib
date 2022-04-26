@@ -28,7 +28,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     world_->addGround(-0.1);
     
     // use preset map for the training
-    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_2.txt", 0, 0);
+    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_11.txt", 0, 0);
     
     // Use terrain generator to generate the map
     //raisim::TerrainProperties terrainProperties;
@@ -54,7 +54,8 @@ class ENVIRONMENT : public RaisimGymEnv {
     pTarget_.setZero(gcDim_); vTarget_.setZero(gvDim_); pTarget12_.setZero(nJoints_);
 
     /// this is nominal configuration of anymal
-    gc_init_ << 1, 1, 1.0, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;	// for preset map
+    //gc_init_ << 1, 1, 1.0, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;	// for smaller preset map
+    gc_init_ << 2, 0, 0.9, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;	// for larger preset map
     //gc_init_ << 2.1, 1, 2.1, 1.0, 0.0, 0.0, 0.0, 0.03, 0.4, -0.8, -0.03, 0.4, -0.8, 0.03, -0.4, 0.8, -0.03, -0.4, 0.8;	// for terrain generator
 
     /// set pd gains

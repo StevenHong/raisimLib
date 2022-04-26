@@ -87,8 +87,8 @@ ppo = PPO.PPO(actor=actor,
               shuffle_batch=False,
               value_loss_coef=0.5,
               entropy_coef=0.01,
+              #learning_rate_schedule='non-adaptive'
               learning_rate_schedule='adaptive'
-              #learning_rate_schedule='adaptive'
               )
 
 if mode == 'retrain':
