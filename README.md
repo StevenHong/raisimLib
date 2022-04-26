@@ -95,7 +95,7 @@ The list of the map included in the file is shown below:
 
 3. Robot model can be switched in Environment.hpp file.
 
-4. RL_training.txt shows the training history data for poster and final report of ECE545.
+4. RL_training.txt shows the training history data for poster and final report of ECE545. The saved training weights are located in ./raisimGymTorch/saved_data.
 
 ## Useful Scripts
 1. Generate the random map using txt file
