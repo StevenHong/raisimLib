@@ -28,7 +28,7 @@ class ENVIRONMENT : public RaisimGymEnv {
     world_->addGround(-0.1);
     
     // use preset map for the training
-    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_11.txt", 0, 0);
+    world_->addHeightMap("/home/roahm/RL_ws/src/raisimLib/rsc/xmlScripts/heightMaps/heightMap_14.txt", 0, 0);
     
     // Use terrain generator to generate the map
     //raisim::TerrainProperties terrainProperties;

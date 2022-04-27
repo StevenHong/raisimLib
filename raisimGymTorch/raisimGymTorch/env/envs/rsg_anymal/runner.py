@@ -94,8 +94,8 @@ ppo = PPO.PPO(actor=actor,
 if mode == 'retrain':
     load_param(weight_path, env, actor, critic, ppo.optimizer, saver.data_dir)
 
-# for update in range(1000000):
-for update in range(20002):
+for update in range(10002):
+#for update in range(20002):
     start = time.time()
     env.reset()
     reward_ll_sum = 0
