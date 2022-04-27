@@ -37,6 +37,7 @@ plt.figure()
 plt.plot(iterations, reward, lw=2)
 plt.xlabel('Iterations (Epoch)')
 plt.ylabel('Avg. Reward')
+#plt.xlim([0, 1500])
 
 plt.savefig('avg-reward.pdf', bbox_inches='tight')
 plt.show()

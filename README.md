@@ -68,9 +68,9 @@ python runner.py | tee output.log
 python3 tester.py --weight /home/roahm/RL_ws/src/raisimlib/raisimGymTorch/data/anymal_locomotion/2022-03-07-13-17-11/full_3400.pt
 ```
 
-5. Retrain the model
+5. Retrain the model with pretrained weights
 ```
-python3 runner.py
+python3 runner.py --mode retrain --weight /home/roahm/RL_ws/src/raisimLib/raisimGymTorch/data/anymal_locomotion/2022-04-26-15-57-55/full_1500.pt
 ```
 
 ## Comparison note
@@ -90,6 +90,8 @@ The list of the map included in the file is shown below:
 - heightMap_13.txt: 30-by-30 testing terrain (0 - 0.5)
 - heightMap_14.txt: 30-by-30 challenging terrain (0 - 0.75)
 - heightMap_15.txt: 30-by-30 impossible terrain (0 - 1.0)
+
+Note: Based on the spec sheet from ANYbotics, model-based controller can handle +/- 20 degree slop. Challenging terrain slope corresponds to 20.55 degree slope, while impossible terrain corresponds to 26.56 degree slope.
 
 2. Instead of the preset random map, can also use terrain generator to create a map in Environment.hpp. The robot needs to contact the ground to start the training.
 
