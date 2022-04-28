@@ -91,7 +91,7 @@ The list of the map included in the file is shown below:
 - heightMap_14.txt: 30-by-30 challenging terrain (0 - 0.75)
 - heightMap_15.txt: 30-by-30 impossible terrain (0 - 1.0)
 
-Note: Based on the spec sheet from ANYbotics, model-based controller can handle +/- 20 degree slop. Normal terrain has a slope of 14.04 degree. Challenging terrain slope corresponds to 20.55 degree slope, while impossible terrain corresponds to 26.56 degree slope.
+Note: Based on the spec sheet from ANYbotics, model-based controller can handle +/- 20 degree slop. Normal terrain has a slope of 14.04 degree. Challenging terrain slope corresponds to 20.55 degree slope, while impossible terrain corresponds to 26.56 degree slope. The size of each grid is 2 meter by 2 meter.
 
 2. Instead of the preset random map, can also use terrain generator to create a map in Environment.hpp. The robot needs to contact the ground to start the training.
 
