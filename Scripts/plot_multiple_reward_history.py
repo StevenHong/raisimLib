@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from array import array
 
 path = '/home/roahm/'
-filename1 = path + 'training_1.log'
-filename3 = path + 'training_3.log'
+filename1 = path + 'training_full.log'
+filename3 = path + 'training_fixed.log'
 
 #reward = array('f')
 
@@ -45,7 +45,8 @@ plt.figure()
 plt.plot(iterations1, reward1, '-b', iterations3, reward3, '--r', lw=2)
 plt.xlabel('Iterations (Epoch)')
 plt.ylabel('Avg. Reward')
-plt.legend(['Adaptive Learning Rate','Fixed Learning Rate'])
+plt.legend(['Adaptive Learning Rate','Fixed Learning Rate'],loc='lower right')
+plt.xlim([0, 1500])
 
-plt.savefig('avg-reward.pdf', bbox_inches='tight')
+plt.savefig('avg-reward.png', bbox_inches='tight')
 plt.show()

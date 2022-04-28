@@ -13,4 +13,4 @@ training for figures
 3. ANYmal B with train_1/2 (undecided) weights and map 13
 4. ANYmal B with train_2 1500_pt weights and map 14: 2022-04-27-14-37-22
 5. ANYmal B with new weights and map 12: 2022-04-26-22-46-01
-6. ANYmal B with new weights and map 14:
+6. ANYmal B with new weights and map 14: 2022-04-27-20-55-24
